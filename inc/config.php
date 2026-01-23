@@ -117,14 +117,30 @@ function starter_nav($section = null)
  */
 function starter_current_nav_section()
 {
-    $uri = $_SERVER['REQUEST_URI'];
+    // 보안: REQUEST_URI 살균 (XSS 방지)
+    $uri = isset($_SERVER['REQUEST_URI'])
+        ? esc_url_raw(wp_unslash($_SERVER['REQUEST_URI']))
+        : '';
     $nav = starter_nav();
 
     foreach ($nav as $key => $data) {
+        // $key는 내부 정의값이므로 안전
         if (strpos($uri, '/' . $key . '/') !== false) {
             return $key;
         }
     }
 
     return 'about'; // default
+}
+
+/**
+ * Get SNS links
+ */
+function starter_sns($key = null)
+{
+    $config = starter_get_config();
+    if ($key === null) {
+        return array_filter($config['sns']); // 빈 값 제거
+    }
+    return isset($config['sns'][$key]) ? $config['sns'][$key] : '';
 }

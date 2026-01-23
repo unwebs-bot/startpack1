@@ -6,25 +6,70 @@
 
 
 /* ==========================================================================
-   1. CSS Variables (최소 필수 변수만)
+   1. CSS Variables - Design Token System
+   프로젝트 시작 시 --uw-primary 값만 변경하면 전체 색상이 조정됩니다.
    ========================================================================== */
 :root {
-  /* 색상 */
+  /* ─────────────────────────────────────────
+     Primary Color (프로젝트별 변경)
+     ───────────────────────────────────────── */
   --uw-primary: #1d8795;
-  --uw-text: #111;
-  --uw-text-light: #666;
-  --uw-bg: #f8f9fa;
-  --uw-border: #e5e5e5;
+  --uw-primary-dark: color-mix(in srgb, var(--uw-primary) 80%, #000);
+  --uw-primary-light: color-mix(in srgb, var(--uw-primary) 20%, #fff);
 
-  /* 서체 */
+  /* ─────────────────────────────────────────
+     Neutral Colors (변경 불필요)
+     ───────────────────────────────────────── */
+  --uw-black: #111;
+  --uw-white: #fff;
+  --uw-gray-900: #222;
+  --uw-gray-700: #444;
+  --uw-gray-500: #666;
+  --uw-gray-400: #888;
+  --uw-gray-300: #aaa;
+  --uw-gray-200: #ddd;
+  --uw-gray-100: #e5e5e5;
+  --uw-gray-50: #f8f9fa;
+
+  /* ─────────────────────────────────────────
+     Semantic Colors (기능별)
+     ───────────────────────────────────────── */
+  --uw-text: var(--uw-black);
+  --uw-text-light: var(--uw-gray-500);
+  --uw-text-muted: var(--uw-gray-400);
+  --uw-bg: var(--uw-gray-50);
+  --uw-border: var(--uw-gray-100);
+  --uw-error: #dc3545;
+  --uw-success: #28a745;
+  --uw-warning: #ffc107;
+
+  /* ─────────────────────────────────────────
+     Typography
+     ───────────────────────────────────────── */
   --uw-font-main: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
   --uw-font-heading: 'Poppins', var(--uw-font-main);
+  --uw-line-height: 1.6;
+  --uw-line-height-tight: 1.3;
 
-  /* 레이아웃 */
+  /* ─────────────────────────────────────────
+     Layout & Spacing
+     ───────────────────────────────────────── */
   --uw-max-width: 1200px;
   --uw-gutter: 20px;
   --uw-section-padding: 100px;
   --uw-header-height: 80px;
+  --uw-radius: 8px;
+  --uw-radius-sm: 4px;
+  --uw-radius-lg: 16px;
+
+  /* ─────────────────────────────────────────
+     Transitions & Shadows
+     ───────────────────────────────────────── */
+  --uw-transition: 0.3s ease;
+  --uw-transition-fast: 0.15s ease;
+  --uw-shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --uw-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  --uw-shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
 }
 
 

@@ -6,7 +6,7 @@ get_header();
 $company = starter_company();
 ?>
 
-<main class="uw-main">
+<main class="uw-main" id="main-content" role="main">
 
   <!-- Hero Visual -->
   <section class="uw-visual">

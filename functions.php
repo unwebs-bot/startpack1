@@ -44,15 +44,43 @@ function starter_enqueue_assets()
 }
 
 /**
- * Preconnect Hints
+ * Resource Hints (Preconnect, DNS Prefetch)
  */
-add_action('wp_head', 'starter_preconnect', 1);
-function starter_preconnect()
+add_action('wp_head', 'starter_resource_hints', 1);
+function starter_resource_hints()
 {
+    // DNS Prefetch
+    echo '<link rel="dns-prefetch" href="//fonts.googleapis.com">' . "\n";
+    echo '<link rel="dns-prefetch" href="//fonts.gstatic.com">' . "\n";
+    echo '<link rel="dns-prefetch" href="//cdn.jsdelivr.net">' . "\n";
+    echo '<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">' . "\n";
+
+    // Preconnect
     echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
     echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
     echo '<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>' . "\n";
 }
+
+/**
+ * Lazy Load 기본 설정
+ */
+add_filter('wp_lazy_loading_enabled', '__return_true');
+
+/**
+ * 이미지에 loading="lazy" 속성 추가 (WordPress 5.5+)
+ */
+add_filter('wp_img_tag_add_loading_attr', function($value, $image, $context) {
+    // Hero 영역 이미지는 제외 (LCP 최적화)
+    if (strpos($image, 'uw-visual') !== false || strpos($image, 'hero') !== false) {
+        return false;
+    }
+    return 'lazy';
+}, 10, 3);
+
+/**
+ * 이미지에 decoding="async" 속성 추가
+ */
+add_filter('wp_img_tag_add_decoding_attr', '__return_true');
 
 /**
  * Security Headers

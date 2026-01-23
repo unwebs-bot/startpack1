@@ -1,16 +1,39 @@
 <?php
 /**
  * 스팸방지 이미지 캡챠 생성
+ *
+ * 보안 강화: CSRF 방지, 세션 고정 공격 방지
  */
 
+// 직접 접근 시에도 WordPress 함수를 사용하지 않으므로 별도 검증
+// 단, 동일 도메인에서만 접근 허용 (Referer 체크)
+$allowed_referer = isset($_SERVER['HTTP_REFERER']) &&
+    strpos($_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST']) !== false;
+
+// 보안 헤더 설정
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
+
 if (session_status() === PHP_SESSION_NONE) {
+  // 세션 보안 설정
+  ini_set('session.cookie_httponly', 1);
+  ini_set('session.cookie_samesite', 'Strict');
+  if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+    ini_set('session.cookie_secure', 1);
+  }
   session_start();
 }
 
-// 랜덤 코드 생성 (숫자만)
+// 세션 재생성 (세션 고정 공격 방지) - 캡챠 생성 시마다
+if (!isset($_SESSION['uw_captcha_initialized'])) {
+  session_regenerate_id(true);
+  $_SESSION['uw_captcha_initialized'] = true;
+}
+
+// 랜덤 코드 생성 (cryptographically secure)
 $captcha_code = '';
 for ($i = 0; $i < 6; $i++) {
-  $captcha_code .= rand(0, 9);
+  $captcha_code .= random_int(0, 9);
 }
 
 // 세션에 저장

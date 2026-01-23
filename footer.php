@@ -1,6 +1,6 @@
 <?php $company = starter_company(); ?>
 
-<footer class="uw-footer">
+<footer class="uw-footer" role="contentinfo">
   <div class="uw-container">
     <div class="uw-footer-middle">
       <a href="<?php echo home_url('/'); ?>" class="uw-footer-logo">
