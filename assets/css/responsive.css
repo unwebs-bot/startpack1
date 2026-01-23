@@ -1,0 +1,31 @@
+@charset "utf-8";
+
+/* ==========================================================================
+   Responsive - 반응형 보조 스타일
+   (핵심 반응형은 layout.css에 포함)
+   ========================================================================== */
+
+/* Mobile Animation 비활성화 */
+@media (max-width: 768px) {
+  [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .delay-100, .delay-200, .delay-300, .delay-400, .delay-500 {
+    animation-delay: 0s !important;
+  }
+}
+
+/* Utility Classes */
+@media (max-width: 768px) {
+  .hidden-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .hidden-desktop {
+    display: none !important;
+  }
+}

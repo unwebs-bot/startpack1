@@ -1,0 +1,353 @@
+@charset "utf-8";
+
+/* ==========================================================================
+   Layout - CSS Variables & Core Layout
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. CSS Variables (최소 필수 변수만)
+   ========================================================================== */
+:root {
+  /* 색상 */
+  --uw-primary: #1d8795;
+  --uw-text: #111;
+  --uw-text-light: #666;
+  --uw-bg: #f8f9fa;
+  --uw-border: #e5e5e5;
+
+  /* 서체 */
+  --uw-font-main: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  --uw-font-heading: 'Poppins', var(--uw-font-main);
+
+  /* 레이아웃 */
+  --uw-max-width: 1200px;
+  --uw-gutter: 20px;
+  --uw-section-padding: 100px;
+  --uw-header-height: 80px;
+}
+
+
+/* ==========================================================================
+   2. Typography (기본 타이포그래피)
+   ========================================================================== */
+body {
+  font-family: var(--uw-font-main);
+  font-size: 16px;
+  color: var(--uw-text);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--uw-font-heading);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+h1 { font-size: 48px; }
+h2 { font-size: 36px; }
+h3 { font-size: 28px; }
+h4 { font-size: 22px; }
+
+
+
+
+/* ==========================================================================
+   3. Container (컨테이너)
+   ========================================================================== */
+.uw-container {
+  max-width: var(--uw-max-width);
+  margin: 0 auto;
+  padding: 0 var(--uw-gutter);
+}
+
+
+/* ==========================================================================
+   4. Header (헤더)
+   ========================================================================== */
+.uw-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--uw-header-height);
+  background: transparent;
+  transition: all 0.3s;
+  z-index: 1000;
+  padding: 0 var(--uw-gutter);
+}
+
+.uw-header.is-scrolled {
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* 로고 */
+.uw-logo img {
+  height: 36px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  transition: filter 0.3s;
+}
+
+.uw-header.is-scrolled .uw-logo img {
+  filter: none;
+}
+
+/* GNB */
+.uw-gnb {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.uw-gnb-list {
+  display: flex;
+  gap: 40px;
+}
+
+.uw-gnb-link {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  transition: color 0.2s;
+}
+
+.uw-header.is-scrolled .uw-gnb-link {
+  color: var(--uw-text);
+}
+
+.uw-gnb-link:hover {
+  color: var(--uw-primary);
+}
+
+/* 모바일 메뉴 버튼 */
+.uw-btn-menu {
+  display: none;
+  width: 24px;
+  height: 24px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.uw-btn-menu span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  transition: background 0.3s;
+}
+
+.uw-header.is-scrolled .uw-btn-menu span {
+  background: var(--uw-text);
+}
+
+
+/* ==========================================================================
+   5. Footer (푸터)
+   ========================================================================== */
+.uw-footer {
+  background: #111;
+  color: #fff;
+  padding: 50px 0 30px;
+}
+
+.uw-footer .uw-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.uw-footer-logo img {
+  height: 36px;
+  filter: brightness(0) invert(1);
+}
+
+.uw-footer-info {
+  font-size: 14px;
+  color: #888;
+  line-height: 1.8;
+}
+
+.uw-footer-copyright {
+  font-size: 13px;
+  color: #555;
+  padding-top: 20px;
+  border-top: 1px solid #333;
+}
+
+
+/* ==========================================================================
+   6. Sub Visual (서브페이지 비주얼)
+   ========================================================================== */
+.sub-visual {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sub-visual-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.6);
+}
+
+.sub-visual-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+}
+
+.sub-page-title {
+  font-size: 48px;
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Sub LNB */
+.sub-lnb {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 55px;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(5px);
+}
+
+.sub-lnb-list {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.sub-lnb-item a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 30px;
+  font-size: 15px;
+  color: rgba(255,255,255,0.8);
+  transition: all 0.2s;
+}
+
+.sub-lnb-item a:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+}
+
+.sub-lnb-item.active a {
+  color: #fff;
+  font-weight: 600;
+  background: var(--uw-primary);
+}
+
+
+/* ==========================================================================
+   7. Section (섹션 기본)
+   ========================================================================== */
+.uw-section {
+  padding: var(--uw-section-padding) 0;
+}
+
+.uw-section.bg-gray {
+  background: var(--uw-bg);
+}
+
+.uw-section-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.uw-section-desc {
+  font-size: 16px;
+  color: var(--uw-text-light);
+}
+
+
+/* ==========================================================================
+   8. Responsive (반응형)
+   ========================================================================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  :root {
+    --uw-section-padding: 80px;
+    --uw-header-height: 70px;
+  }
+
+  .uw-gnb {
+    display: none;
+  }
+
+  .uw-btn-menu {
+    display: flex;
+  }
+
+  .sub-visual {
+    height: 320px;
+  }
+
+  .sub-page-title {
+    font-size: 36px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  :root {
+    --uw-section-padding: 60px;
+    --uw-header-height: 60px;
+    --uw-gutter: 16px;
+  }
+
+  h1 { font-size: 32px; }
+  h2 { font-size: 26px; }
+  h3 { font-size: 22px; }
+
+  .sub-visual {
+    height: 250px;
+  }
+
+  .sub-page-title {
+    font-size: 28px;
+  }
+
+  .sub-lnb {
+    height: 50px;
+    overflow-x: auto;
+  }
+
+  .sub-lnb-item a {
+    padding: 0 20px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .uw-section-title {
+    font-size: 28px;
+  }
+
+  .uw-footer {
+    padding: 40px 0 25px;
+  }
+
+  .uw-footer-info {
+    font-size: 13px;
+  }
+}

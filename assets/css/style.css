@@ -1,0 +1,26 @@
+@charset "utf-8";
+/*
+Theme Name: Starter Theme
+Description: WordPress Starter Theme
+Version: 2.0
+Author: Your Name
+*/
+
+/* ==========================================================================
+   CSS Architecture - Simplified Structure
+   ========================================================================== */
+
+@import 'reset.css';
+@import 'layout.css';
+@import 'page.css';
+@import 'animate.css';
+@import 'responsive.css';
+
+/* ==========================================================================
+   6. CPT - Custom Post Type (폴더 구조)
+   ========================================================================== */
+
+@import 'cpt/board/board.css';
+@import 'cpt/board/skins.css';
+@import 'cpt/gallery/gallery.css';
+@import 'cpt/inquiry/inquiry.css';
