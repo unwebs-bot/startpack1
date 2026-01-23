@@ -1,15 +1,6 @@
 <?php
 /**
  * Template Part: Inquiry Form Display
- * 
- * 입력폼 표시를 위한 템플릿 파트
- * 
- * Usage: <?php get_template_part('template-parts/content-inquiry', 'form'); ?>
- * 
- * Variables available via set_query_var():
- *   $form_id - (optional) Specific form ID to display
- * 
- * @package starter-theme
  */
 
 // 특정 폼 ID가 전달되었는지 확인
