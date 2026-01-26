@@ -297,7 +297,7 @@ class UW_Board_Engine
               if ($pinned_query && $pinned_query->have_posts()) {
                 while ($pinned_query->have_posts()):
                   $pinned_query->the_post();
-                  get_template_part('template-parts/uw-board/list', $skin, array('slug' => $slug, 'is_pinned' => true, 'board' => $board));
+                  $this->load_template('list-' . $skin, array('slug' => $slug, 'is_pinned' => true, 'board' => $board));
                 endwhile;
                 wp_reset_postdata();
               }
@@ -306,7 +306,7 @@ class UW_Board_Engine
               $num = $total - (($paged - 1) * $per_page);
               while ($query->have_posts()):
                 $query->the_post();
-                get_template_part('template-parts/uw-board/list', $skin, array('slug' => $slug, 'is_pinned' => false, 'num' => $num--, 'board' => $board));
+                $this->load_template('list-' . $skin, array('slug' => $slug, 'is_pinned' => false, 'num' => $num--, 'board' => $board));
               endwhile;
               wp_reset_postdata();
               ?>
@@ -330,7 +330,7 @@ class UW_Board_Engine
             if ($query->have_posts()):
               while ($query->have_posts()):
                 $query->the_post();
-                get_template_part('template-parts/uw-board/list', $skin, array('slug' => $slug, 'board' => $board));
+                $this->load_template('list-' . $skin, array('slug' => $slug, 'board' => $board));
               endwhile;
               wp_reset_postdata();
             else: ?>
@@ -664,6 +664,20 @@ class UW_Board_Engine
     }
 
     return false;
+  }
+
+  /**
+   * UW Board 템플릿 로드
+   * inc/uw-board/templates/ 폴더에서 템플릿 로드
+   */
+  private function load_template($template, $args = array())
+  {
+    $template_path = get_template_directory() . '/inc/uw-board/templates/' . $template . '.php';
+    if (file_exists($template_path)) {
+      // $args 변수를 템플릿에서 사용 가능하도록 extract
+      extract($args);
+      include $template_path;
+    }
   }
 
   /**

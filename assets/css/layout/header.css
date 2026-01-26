@@ -1,0 +1,797 @@
+@charset "utf-8";
+
+/* ==========================================================================
+   Header System
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. Header Base
+   ========================================================================== */
+.uw-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--uw-header-height);
+  z-index: 9999;
+}
+
+.uw-header__wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--uw-header-height);
+  z-index: 9999;
+  background-color: transparent;
+  transition: background-color 0.5s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.uw-header__inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--uw-header-height);
+  margin: 0 auto;
+  padding: 0 var(--area-padding);
+}
+
+
+/* ==========================================================================
+   2. Logo
+   ========================================================================== */
+.uw-header__logo {
+  position: relative;
+  z-index: 100;
+}
+
+.uw-header__logo a {
+  display: block;
+}
+
+.uw-header__logo img {
+  height: 44px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  transition: filter 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Text Logo (optional) */
+.uw-header__logo-text {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--uw-white);
+  transition: color 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+
+/* ==========================================================================
+   3. GNB - PC Navigation
+   ========================================================================== */
+.uw-gnb {
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+}
+
+.uw-gnb__list {
+  display: inline-flex;
+  height: 100%;
+}
+
+.uw-gnb__item {
+  position: relative;
+  word-break: keep-all;
+}
+
+.uw-gnb__link {
+  position: relative;
+  z-index: 100;
+  display: block;
+  line-height: var(--uw-header-height);
+  padding: 0 2.5rem;
+  text-align: center;
+  color: var(--uw-white);
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: color 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.uw-gnb__link:hover,
+.uw-gnb__link:focus,
+.uw-gnb__item.is-active > .uw-gnb__link {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+
+/* ==========================================================================
+   4. GNB Submenu (Dropdown - Each Menu Style)
+   ========================================================================== */
+.uw-gnb__sub {
+  position: absolute;
+  top: calc(var(--uw-header-height) - 15px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99;
+  min-width: 180px;
+  text-align: left;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* Submenu Background */
+.uw-gnb__sub::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background-color: var(--uw-white);
+  transition: height 0.2s cubic-bezier(0.4, 0, 1, 1);
+  box-shadow: var(--uw-shadow);
+  border-radius: 1.5rem;
+}
+
+.uw-gnb__sub-list {
+  padding: 1rem 0;
+}
+
+.uw-gnb__sub-item {
+  position: relative;
+  padding: 0 .5rem;
+  opacity: 0;
+  transition: all 0s 0s;
+}
+
+.uw-gnb__sub-link {
+  position: relative;
+  display: block;
+  color: #666;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.7;
+  transition: opacity 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 0.5rem 0;
+}
+
+/* Submenu Link Hover Background */
+.uw-gnb__sub-link::before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 2rem;
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.uw-gnb__sub-link:hover::before {
+  opacity: 1;
+}
+
+/* Submenu Open State */
+.uw-gnb__sub.is-open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.uw-gnb__sub.is-open::before {
+  height: 100%;
+}
+
+.uw-gnb__sub.is-open .uw-gnb__sub-item {
+  opacity: 1;
+  transition: var(--uw-transition);
+}
+
+.uw-gnb__sub.is-open .uw-gnb__sub-item:nth-child(1) { transition-delay: 0.15s; }
+.uw-gnb__sub.is-open .uw-gnb__sub-item:nth-child(2) { transition-delay: 0.2s; }
+.uw-gnb__sub.is-open .uw-gnb__sub-item:nth-child(3) { transition-delay: 0.25s; }
+.uw-gnb__sub.is-open .uw-gnb__sub-item:nth-child(4) { transition-delay: 0.3s; }
+.uw-gnb__sub.is-open .uw-gnb__sub-item:nth-child(5) { transition-delay: 0.35s; }
+.uw-gnb__sub.is-open .uw-gnb__sub-item:nth-child(6) { transition-delay: 0.4s; }
+
+
+/* ==========================================================================
+   5. Sitemap Button (Dotted Grid Button)
+   ========================================================================== */
+.uw-header__util {
+  position: relative;
+  z-index: 100;
+}
+
+.uw-header__sitemap-btn,
+.uw-header__mobile-btn {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.uw-header__dotted {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.uw-header__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #a2c8ff;
+  margin: 2px;
+  transition: background 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.uw-header__dot:nth-child(2),
+.uw-header__dot:nth-child(3) {
+  background: var(--uw-primary);
+}
+
+
+/* ==========================================================================
+   6. Scrolled State
+   ========================================================================== */
+.uw-header.is-scrolled .uw-header__wrap {
+  background-color: var(--uw-white);
+  border-bottom: 1px solid #ececec;
+}
+
+.uw-header.is-scrolled .uw-header__logo img {
+  filter: none;
+}
+
+.uw-header.is-scrolled .uw-header__logo-text {
+  color: var(--uw-text);
+}
+
+.uw-header.is-scrolled .uw-gnb__link {
+  color: var(--uw-text);
+}
+
+.uw-header.is-scrolled .uw-gnb__link:hover,
+.uw-header.is-scrolled .uw-gnb__item.is-active > .uw-gnb__link {
+  color: #666;
+}
+
+.uw-header.is-scrolled .uw-header__dot {
+  background: #a2c8ff;
+}
+
+.uw-header.is-scrolled .uw-header__dot:nth-child(2),
+.uw-header.is-scrolled .uw-header__dot:nth-child(3) {
+  background: var(--uw-primary);
+}
+
+
+/* ==========================================================================
+   7. Sitemap Overlay (PC Fullscreen Menu)
+   ========================================================================== */
+.uw-sitemap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9998;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Background Layer */
+.uw-sitemap__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: height 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Open State */
+body.sitemap-open .uw-sitemap {
+  pointer-events: auto;
+}
+
+body.sitemap-open .uw-sitemap__bg {
+  height: 100%;
+}
+
+/* Container */
+.uw-sitemap__container {
+  position: relative;
+  z-index: 2;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  padding: 0 var(--area-padding);
+  max-width: var(--area-box-width);
+  margin: 0 auto;
+}
+
+/* Column */
+.uw-sitemap__col {
+  display: table-cell;
+  vertical-align: top;
+  text-align: left;
+  position: relative;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0s, transform 0s;
+}
+
+body.sitemap-open .uw-sitemap__col {
+  padding: 0 3%;
+  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+body.sitemap-open .uw-sitemap__col:nth-child(1) { transition-delay: 0.4s; }
+body.sitemap-open .uw-sitemap__col:nth-child(2) { transition-delay: 0.5s; }
+body.sitemap-open .uw-sitemap__col:nth-child(3) { transition-delay: 0.6s; }
+body.sitemap-open .uw-sitemap__col:nth-child(4) { transition-delay: 0.7s; }
+body.sitemap-open .uw-sitemap__col:nth-child(5) { transition-delay: 0.8s; }
+body.sitemap-open .uw-sitemap__col:nth-child(6) { transition-delay: 0.9s; }
+
+/* Column Title */
+.uw-sitemap__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 50px;
+  color: var(--uw-white);
+  padding-bottom: 12px;
+  display: block;
+  position: relative;
+  transition: color 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Dot indicator on hover */
+.uw-sitemap__title::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  transform: translateY(-15px);
+  width: 12px;
+  height: 12px;
+  background: var(--uw-primary);
+  border-radius: 50%;
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+}
+
+.uw-sitemap__col.is-active .uw-sitemap__title::before {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Links */
+.uw-sitemap__list {
+  text-align: left;
+}
+
+.uw-sitemap__list li {
+  margin-bottom: 10px;
+}
+
+.uw-sitemap__link {
+  font-size: 20px;
+  padding: 5px 0;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  transition: color 0.5s cubic-bezier(0.25, 0.8, 0.25, 1),
+              opacity 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  display: inline-block;
+}
+
+.uw-sitemap__link:hover {
+  color: var(--uw-white);
+}
+
+/* Active column - fade other links */
+.uw-sitemap__col.is-active .uw-sitemap__link {
+  opacity: 0.4;
+}
+
+.uw-sitemap__col.is-active .uw-sitemap__link:hover {
+  opacity: 1;
+}
+
+/* Hide GNB when sitemap is open */
+body.sitemap-open .uw-gnb__link {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: var(--uw-transition);
+}
+
+body.sitemap-open .uw-header__wrap {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-bottom: none !important;
+}
+
+body.sitemap-open .uw-header .uw-header__logo img {
+  filter: brightness(0) invert(1);
+}
+
+body.sitemap-open .uw-header__logo-text {
+  color: var(--uw-white) !important;
+}
+
+body.sitemap-open .uw-header__dot {
+  background: #a2c8ff;
+}
+
+body.sitemap-open .uw-header__dot:nth-child(2),
+body.sitemap-open .uw-header__dot:nth-child(3) {
+  background: var(--uw-primary);
+}
+
+
+/* ==========================================================================
+   8. Mobile Navigation - Slide-in Accordion Menu
+   ========================================================================== */
+
+/* --- 8.1 Mobile Menu Button (Dot Grid - same as PC) --- */
+.uw-mobile-btn {
+  display: none;
+  position: fixed;
+  top: calc((var(--uw-header-height) - 32px) / 2);
+  right: var(--area-padding);
+  z-index: 10001;
+  height: 40px;
+  padding: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.uw-mobile-btn__dotted {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+.uw-mobile-btn__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--uw-white);
+  margin: 2px;
+  transition: background 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.uw-mobile-btn__dot:nth-child(2),
+.uw-mobile-btn__dot:nth-child(3) {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Scrolled state */
+.uw-header.is-scrolled ~ .uw-mobile-btn .uw-mobile-btn__dot {
+  background: var(--uw-text);
+}
+
+.uw-header.is-scrolled ~ .uw-mobile-btn .uw-mobile-btn__dot:nth-child(2),
+.uw-header.is-scrolled ~ .uw-mobile-btn .uw-mobile-btn__dot:nth-child(3) {
+  background: #999;
+}
+
+/* Menu open state */
+body.mobile-menu-open .uw-mobile-btn .uw-mobile-btn__dot {
+  background: var(--uw-text);
+}
+
+body.mobile-menu-open .uw-mobile-btn .uw-mobile-btn__dot:nth-child(2),
+body.mobile-menu-open .uw-mobile-btn .uw-mobile-btn__dot:nth-child(3) {
+  background: #999;
+}
+
+
+/* --- 8.2 Mobile Overlay --- */
+.uw-mobile-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1),
+              visibility 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+body.mobile-menu-open .uw-mobile-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* --- 8.3 Mobile Navigation Panel --- */
+.uw-mobile-nav {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 80%;
+  max-width: 380px;
+  height: 100%;
+  background-color: var(--uw-white);
+  z-index: 10000;
+  transform: translateX(100%);
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  flex-direction: column;
+}
+
+body.mobile-menu-open .uw-mobile-nav {
+  transform: translateX(0);
+}
+
+
+/* --- 8.4 Mobile Nav Header --- */
+.uw-mobile-nav__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--uw-border);
+  min-height: var(--uw-header-height);
+  box-sizing: border-box;
+}
+
+.uw-mobile-nav__logo img {
+  height: 32px;
+  width: auto;
+}
+
+
+/* --- 8.5 Mobile Nav Content --- */
+.uw-mobile-nav__content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0;
+}
+
+.uw-mobile-nav__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+/* --- 8.6 Accordion Item --- */
+.uw-mobile-nav__item {
+  border-bottom: 1px solid var(--uw-border);
+}
+
+.uw-mobile-nav__item:last-child {
+  border-bottom: none;
+}
+
+/* Accordion Trigger Button */
+.uw-mobile-nav__trigger,
+.uw-mobile-nav__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 18px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: var(--uw-transition);
+}
+
+
+.uw-mobile-nav__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--uw-text);
+  transition: var(--uw-transition);
+}
+
+.uw-mobile-nav__trigger:hover .uw-mobile-nav__title,
+.uw-mobile-nav__link:hover .uw-mobile-nav__title,
+.uw-mobile-nav__item.is-active > .uw-mobile-nav__trigger .uw-mobile-nav__title,
+.uw-mobile-nav__item.is-active > .uw-mobile-nav__link .uw-mobile-nav__title {
+  color: #666;
+}
+
+
+/* --- 8.7 Toggle Icon (+/-) --- */
+.uw-mobile-nav__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--uw-gray);
+  transition: var(--uw-transition);
+}
+
+.uw-mobile-nav__trigger:hover .uw-mobile-nav__icon {
+  color: #666;
+}
+
+/* SVG Icon Base */
+.uw-icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Plus/Minus Toggle State */
+.uw-mobile-nav__icon .uw-icon--minus {
+  display: none;
+}
+
+.uw-mobile-nav__item.is-open .uw-mobile-nav__icon .uw-icon--plus {
+  display: none;
+}
+
+.uw-mobile-nav__item.is-open .uw-mobile-nav__icon .uw-icon--minus {
+  display: block;
+}
+
+
+/* --- 8.8 Accordion Panel (Submenu) --- */
+.uw-mobile-nav__panel {
+  max-height: 0;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.02);
+  transition: max-height 0.5s cubic-bezier(0.2, 0.4, 0.8, 1);
+}
+
+.uw-mobile-nav__item.is-open .uw-mobile-nav__panel {
+  max-height: 300px;
+  transition: max-height 0.5s cubic-bezier(0.2, 0.4, 0.8, 1);
+}
+
+.uw-mobile-nav__sub-list {
+  margin: 0;
+  padding: 8px 0;
+  list-style: none;
+}
+
+.uw-mobile-nav__sub-link {
+  display: block;
+  padding: 12px 20px 12px 32px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--uw-gray);
+  transition: var(--uw-transition);
+}
+
+.uw-mobile-nav__sub-link:hover {
+  color: var(--uw-text);
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Main link style (전체보기) */
+.uw-mobile-nav__sub-link--main {
+  font-weight: 500;
+  color: var(--uw-text);
+}
+
+
+/* --- 8.9 Body Scroll Lock --- */
+body.mobile-menu-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+
+/* ==========================================================================
+   9. Responsive
+   ========================================================================== */
+
+/* Tablet (1024px) - Switch to mobile navigation */
+@media (max-width: 1024px) {
+  .uw-header__wrap {
+    position: fixed;
+    z-index: 99;
+  }
+
+  .uw-header.is-scrolled .uw-header__wrap {
+    background-color: var(--uw-white);
+    border-bottom: 1px solid var(--uw-border);
+  }
+
+  /* Hide PC elements */
+  .uw-gnb { display: none; }
+  .uw-header__sitemap-btn { display: none; }
+  .uw-sitemap { display: none; }
+
+  /* Show mobile elements */
+  .uw-mobile-btn {
+    display: flex;
+  }
+
+  .uw-mobile-overlay {
+    display: block;
+  }
+
+  .uw-mobile-nav {
+    display: flex;
+  }
+}
+
+/* Mobile (768px) */
+@media (max-width: 768px) {
+  .uw-header__logo img {
+    height: 36px;
+  }
+
+  .uw-mobile-nav__title {
+    font-size: 1.2rem;
+  }
+
+  .uw-mobile-nav__sub-link {
+    font-size: 1rem;
+    padding: 10px 20px 10px 28px;
+  }
+}
+
+/* Small Mobile (480px) */
+@media (max-width: 480px) {
+  .uw-header__logo img {
+    height: 36px;
+  }
+
+  .uw-mobile-nav {
+    width: 80%;
+    max-width: none;
+  }
+
+  .uw-mobile-nav__header {
+    padding: 12px 16px;
+  }
+
+  .uw-mobile-nav__trigger,
+  .uw-mobile-nav__link {
+    padding: 16px;
+  }
+
+  .uw-mobile-nav__sub-link {
+    padding: 10px 16px 10px 24px;
+  }
+
+  .uw-mobile-nav__footer {
+    padding: 16px;
+  }
+}

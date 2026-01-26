@@ -2,7 +2,7 @@
 /*
 Theme Name: Starter Theme
 Description: WordPress Starter Theme
-Version: 2.0
+Version: 1.0
 Author: Your Name
 */
 
@@ -11,7 +11,9 @@ Author: Your Name
    ========================================================================== */
 
 @import 'reset.css';
-@import 'layout.css';
+@import 'layout/layout.css';
+@import 'layout/header.css';
+@import 'layout/footer.css';
 @import 'page.css';
 @import 'animate.css';
 @import 'responsive.css';

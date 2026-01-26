@@ -29,3 +29,100 @@
     display: none !important;
   }
 }
+
+
+/* ==========================================================================
+   7. Responsive (반응형)
+   ========================================================================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  html {
+    font-size: 15px;
+  }
+
+  :root {
+    --uw-header-height: 70px;
+    --area-padding: 20px;
+  }
+
+  .sub-visual {
+    height: 320px;
+  }
+
+  .sub-visual__title {
+    font-size: 36px;
+  }
+
+  /* Title Box - Tablet */
+  .tit-box {
+    margin-bottom: 40px;
+  }
+
+  .tit-box .main-tit {
+    font-size: 30px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  :root {
+    --uw-header-height: 70px;
+    --area-padding: 15px;
+  }
+
+  .sub-visual {
+    height: 250px;
+  }
+
+  .sub-visual__title {
+    font-size: 28px;
+    margin-top: 10px;
+  }
+
+  .sub-breadcrumb__item {
+    font-size: 13px;
+  }
+
+  .sub-lnb {
+    height: 50px;
+    overflow-x: auto;
+  }
+
+  .sub-lnb__list {
+    justify-content: flex-start;
+    padding: 0 15px;
+  }
+
+  .sub-lnb__item a {
+    padding: 0 20px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .uw-footer {
+    padding: 40px 0 25px;
+  }
+
+  .uw-footer-info {
+    font-size: 13px;
+  }
+
+  /* Title Box - Mobile */
+  .tit-box {
+    margin-bottom: 30px;
+  }
+
+  .tit-box .main-tit {
+    font-size: 26px;
+  }
+
+  .tit-box .sub-tit {
+    font-size: 15px;
+    margin-top: 12px;
+  }
+}
