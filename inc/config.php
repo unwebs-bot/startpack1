@@ -17,6 +17,17 @@ function starter_get_config()
 
     if ($config === null) {
         $config = array(
+            // Site / SEO Info
+            'site' => array(
+                'title'       => '회사명',
+                'description' => '회사 소개 문구를 입력하세요.',
+                'keywords'    => '키워드1, 키워드2, 키워드3',
+                'og_image'    => '/assets/images/og-image.jpg',     // 테마 상대경로
+                'theme_color' => '#222222',
+                'google_verification' => '',   // Google Search Console
+                'naver_verification'  => '',   // Naver Search Advisor
+            ),
+
             // Company Info
             'company' => array(
                 'name'      => '회사명',
@@ -89,6 +100,69 @@ function starter_get_config()
     }
 
     return $config;
+}
+
+/**
+ * Get site/SEO info
+ */
+function starter_site($key = null)
+{
+    $config = starter_get_config();
+    if ($key === null) {
+        return $config['site'];
+    }
+    return isset($config['site'][$key]) ? $config['site'][$key] : '';
+}
+
+/**
+ * Get head meta data (페이지별 동적 생성)
+ */
+function starter_head_meta()
+{
+    $site = starter_site();
+    $site_url = home_url('/');
+
+    // 페이지별 타이틀
+    if (is_front_page()) {
+        $page_title = $site['title'];
+    } elseif (is_singular()) {
+        $page_title = get_the_title() . ' | ' . $site['title'];
+    } else {
+        $page_title = wp_title('|', false, 'right') . $site['title'];
+    }
+
+    // 페이지별 설명
+    if (is_singular() && has_excerpt()) {
+        $page_desc = get_the_excerpt();
+    } else {
+        $page_desc = $site['description'];
+    }
+
+    // OG 이미지 (특성 이미지 → 기본 이미지)
+    if (is_singular() && has_post_thumbnail()) {
+        $og_image = get_the_post_thumbnail_url(null, 'large');
+    } else {
+        $og_image = get_theme_file_uri($site['og_image']);
+    }
+
+    // Canonical URL
+    if (is_singular()) {
+        $canonical = get_permalink();
+    } else {
+        $canonical = $site_url;
+    }
+
+    return array(
+        'title'       => esc_attr($page_title),
+        'description' => esc_attr($page_desc),
+        'keywords'    => esc_attr($site['keywords']),
+        'og_image'    => esc_url($og_image),
+        'canonical'   => esc_url($canonical),
+        'site_url'    => esc_url($site_url),
+        'theme_color' => esc_attr($site['theme_color']),
+        'google_verification' => esc_attr($site['google_verification']),
+        'naver_verification'  => esc_attr($site['naver_verification']),
+    );
 }
 
 /**

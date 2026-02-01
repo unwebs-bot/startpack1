@@ -50,11 +50,7 @@ $social_links = array_filter($footer_data['socialLinks'], function ($link) {
           <?php if (!empty($company_info['tel'])) : ?>
           <div class="uw-footer__contact-item">
             <span class="uw-footer__contact-label">Tel</span>
-            <span class="uw-footer__contact-value">
-              <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9+]/', '', $company_info['tel'])); ?>">
-                <?php echo esc_html($company_info['tel']); ?>
-              </a>
-            </span>
+            <span class="uw-footer__contact-value"><?php echo esc_html($company_info['tel']); ?></span>
           </div>
           <?php endif; ?>
 
@@ -68,11 +64,7 @@ $social_links = array_filter($footer_data['socialLinks'], function ($link) {
           <?php if (!empty($company_info['email'])) : ?>
           <div class="uw-footer__contact-item">
             <span class="uw-footer__contact-label">Email</span>
-            <span class="uw-footer__contact-value">
-              <a href="mailto:<?php echo esc_attr($company_info['email']); ?>">
-                <?php echo esc_html($company_info['email']); ?>
-              </a>
-            </span>
+            <span class="uw-footer__contact-value"><?php echo esc_html($company_info['email']); ?></span>
           </div>
           <?php endif; ?>
         </div>

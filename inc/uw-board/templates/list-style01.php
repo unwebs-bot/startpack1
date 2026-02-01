@@ -1,15 +1,21 @@
 <?php
 /**
  * UW Board Style 01 (Table Row) Template
- * 
- * Vars available:
- * - $is_pinned
- * - $num
- * - $slug
+ *
+ * Vars available via $args:
+ * - $args['is_pinned']
+ * - $args['num']
+ * - $args['slug']
+ * - $args['board']
  */
 
 $post_id = get_the_ID();
-extract($args);
+
+// Explicit variable assignment (security: avoid extract())
+$is_pinned = isset($args['is_pinned']) ? $args['is_pinned'] : false;
+$num = isset($args['num']) ? $args['num'] : '';
+$slug = isset($args['slug']) ? $args['slug'] : '';
+$board = isset($args['board']) ? $args['board'] : array();
 $views = get_post_meta($post_id, '_uw_views', true) ?: 0;
 $is_new = (time() - get_the_time('U')) < 86400;
 $attachments = get_post_meta($post_id, '_uw_attachments', true);

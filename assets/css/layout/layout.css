@@ -58,8 +58,38 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 auto;
 }
 
+
+
 /* ==========================================================================
-   4. Sub Visual (서브페이지 비주얼)
+   4. Title Box (섹션 타이틀)
+   ========================================================================== */
+.tit-box {
+  text-align: center;
+}
+
+.tit-box .category-tit {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--uw-primary);
+}
+
+.tit-box .main-tit {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-top: 15px;
+}
+
+.tit-box .sub-tit {
+  font-size: 20px;
+  color: #666;
+  margin-top: 20px;
+}
+
+
+
+/* ==========================================================================
+   5. Sub Visual (서브페이지 비주얼)
    ========================================================================== */
 .sub-visual {
   position: relative;
@@ -174,24 +204,4 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--uw-primary);
 }
 
-
-/* ==========================================================================
-   6. Title Box (섹션 타이틀)
-   ========================================================================== */
-.tit-box {
-  text-align: center;
-}
-
-.tit-box .main-tit {
-  font-size: 36px;
-  font-weight: 700;
-  color: var(--uw-text);
-}
-
-.tit-box .sub-tit {
-    font-size: 20px;
-    line-height: 1.4;
-    color: #666;
-    margin-top: 10px;
-}
 

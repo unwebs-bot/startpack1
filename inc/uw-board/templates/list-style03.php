@@ -1,14 +1,17 @@
 <?php
 /**
  * UW Board Style 03 (Thumbnail Card) Template
- * 
- * Vars available:
- * - $slug
- * - $board
+ *
+ * Vars available via $args:
+ * - $args['slug']
+ * - $args['board']
  */
 
 $post_id = get_the_ID();
-extract($args);
+
+// Explicit variable assignment (security: avoid extract())
+$slug = isset($args['slug']) ? $args['slug'] : '';
+$board = isset($args['board']) ? $args['board'] : array();
 global $wp;
 $single_url = add_query_arg(array('view' => 'single', 'id' => $post_id), home_url($wp->request));
 

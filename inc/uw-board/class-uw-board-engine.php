@@ -642,6 +642,10 @@ class UW_Board_Engine
 
   /**
    * 수정 권한 체크
+   *
+   * @param WP_Post $post  게시글 객체
+   * @param array   $board 게시판 설정
+   * @return bool
    */
   private function can_edit_post($post, $board)
   {
@@ -655,8 +659,14 @@ class UW_Board_Engine
 
     // 비회원 글 검증 (토큰 방식)
     if ($board['write_permission'] === 'all') {
-      // 1. URL 파라미터 또는 POST 데이터에서 토큰 확인
-      $token = isset($_REQUEST['token']) ? $_REQUEST['token'] : (isset($_POST['uw_token']) ? $_POST['uw_token'] : '');
+      // 보안: POST 데이터에서만 토큰 확인 (GET 파라미터 제외 - CSRF 방지)
+      $token = '';
+      if (isset($_POST['uw_token'])) {
+        $token = sanitize_text_field($_POST['uw_token']);
+      } elseif (isset($_GET['token']) && $_SERVER['REQUEST_METHOD'] === 'GET') {
+        // GET 요청 시 폼 로드용 토큰 (수정 폼 접근)
+        $token = sanitize_text_field($_GET['token']);
+      }
 
       if ($token && get_transient('uw_board_auth_' . $post->ID . '_' . $token)) {
         return true;
@@ -669,13 +679,15 @@ class UW_Board_Engine
   /**
    * UW Board 템플릿 로드
    * inc/uw-board/templates/ 폴더에서 템플릿 로드
+   *
+   * @param string $template 템플릿 파일명 (확장자 제외)
+   * @param array  $args     템플릿에 전달할 변수 배열
    */
   private function load_template($template, $args = array())
   {
     $template_path = get_template_directory() . '/inc/uw-board/templates/' . $template . '.php';
     if (file_exists($template_path)) {
-      // $args 변수를 템플릿에서 사용 가능하도록 extract
-      extract($args);
+      // $args를 템플릿에서 직접 사용 (extract() 사용 금지 - 보안)
       include $template_path;
     }
   }
@@ -793,8 +805,15 @@ class UW_Board_Engine
       require_once(ABSPATH . 'wp-admin/includes/file.php');
       require_once(ABSPATH . 'wp-admin/includes/media.php');
 
+      $max_file_size = 10 * 1024 * 1024; // 10MB
+
       foreach ($_FILES['files']['name'] as $key => $value) {
         if ($_FILES['files']['error'][$key] === UPLOAD_ERR_OK && !empty($_FILES['files']['name'][$key])) {
+          // 파일 크기 제한 체크
+          if ($_FILES['files']['size'][$key] > $max_file_size) {
+            continue; // 크기 초과 파일은 건너뜀
+          }
+
           $file = array(
             'name' => $_FILES['files']['name'][$key],
             'type' => $_FILES['files']['type'][$key],
@@ -946,51 +965,63 @@ class UW_Board_Engine
   }
 
   /**
-   * 제목만 검색 필터
+   * 검색 필터 생성 (통합 메서드)
+   *
+   * @param string   $search   현재 검색 쿼리
+   * @param WP_Query $wp_query 쿼리 객체
+   * @param string   $field    검색 필드 (post_title 또는 post_content)
+   * @return string 수정된 검색 쿼리
    */
-  public function filter_search_title($search, $wp_query)
+  private function build_search_filter($search, $wp_query, $field)
   {
     global $wpdb;
-    if (empty($search))
+
+    if (empty($search)) {
       return $search;
+    }
+
     $q = $wp_query->query_vars;
     $n = !empty($q['exact']) ? '' : '%';
     $search = $searchand = '';
+
     foreach ((array) $q['search_terms'] as $term) {
       $term = esc_sql($wpdb->esc_like($term));
-      $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}')";
+      $search .= "{$searchand}($wpdb->posts.{$field} LIKE '{$n}{$term}{$n}')";
       $searchand = ' AND ';
     }
+
     if (!empty($search)) {
       $search = " AND ({$search}) ";
-      if (!is_user_logged_in())
+      if (!is_user_logged_in()) {
         $search .= " AND ($wpdb->posts.post_password = '') ";
+      }
     }
+
     return $search;
   }
 
   /**
+   * 제목만 검색 필터
+   *
+   * @param string   $search   현재 검색 쿼리
+   * @param WP_Query $wp_query 쿼리 객체
+   * @return string
+   */
+  public function filter_search_title($search, $wp_query)
+  {
+    return $this->build_search_filter($search, $wp_query, 'post_title');
+  }
+
+  /**
    * 내용만 검색 필터
+   *
+   * @param string   $search   현재 검색 쿼리
+   * @param WP_Query $wp_query 쿼리 객체
+   * @return string
    */
   public function filter_search_content($search, $wp_query)
   {
-    global $wpdb;
-    if (empty($search))
-      return $search;
-    $q = $wp_query->query_vars;
-    $n = !empty($q['exact']) ? '' : '%';
-    $search = $searchand = '';
-    foreach ((array) $q['search_terms'] as $term) {
-      $term = esc_sql($wpdb->esc_like($term));
-      $search .= "{$searchand}($wpdb->posts.post_content LIKE '{$n}{$term}{$n}')";
-      $searchand = ' AND ';
-    }
-    if (!empty($search)) {
-      $search = " AND ({$search}) ";
-      if (!is_user_logged_in())
-        $search .= " AND ($wpdb->posts.post_password = '') ";
-    }
-    return $search;
+    return $this->build_search_filter($search, $wp_query, 'post_content');
   }
 
   /**

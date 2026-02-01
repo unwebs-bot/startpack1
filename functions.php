@@ -19,6 +19,18 @@ function starter_setup()
 }
 
 /**
+ * Get file version based on modification time (cache busting)
+ *
+ * @param string $file Relative file path from theme directory
+ * @return string File modification timestamp or fallback version
+ */
+function starter_get_version($file)
+{
+    $file_path = get_template_directory() . $file;
+    return file_exists($file_path) ? filemtime($file_path) : '1.0.0';
+}
+
+/**
  * Enqueue Assets
  */
 add_action('wp_enqueue_scripts', 'starter_enqueue_assets');
@@ -27,14 +39,14 @@ function starter_enqueue_assets()
     // Google Fonts (Poppins)
     wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap', array(), null);
 
-    // Theme CSS
-    wp_enqueue_style('theme-style', get_stylesheet_uri(), array(), '1.0');
-    wp_enqueue_style('main-style', get_theme_file_uri('/assets/css/style.css'), array('google-fonts', 'theme-style'), '1.0');
+    // Theme CSS (자동 버전 관리)
+    wp_enqueue_style('theme-style', get_stylesheet_uri(), array(), starter_get_version('/style.css'));
+    wp_enqueue_style('main-style', get_theme_file_uri('/assets/css/style.css'), array('google-fonts', 'theme-style'), starter_get_version('/assets/css/style.css'));
 
-    // JS
-    wp_enqueue_script('header', get_theme_file_uri('/assets/js/header.js'), array(), '1.0', true);
-    wp_enqueue_script('footer', get_theme_file_uri('/assets/js/footer.js'), array(), '1.0', true);
-    wp_enqueue_script('main', get_theme_file_uri('/assets/js/main.js'), array('header', 'footer'), '1.0', true);
+    // JS (자동 버전 관리)
+    wp_enqueue_script('header', get_theme_file_uri('/assets/js/header.js'), array(), starter_get_version('/assets/js/header.js'), true);
+    wp_enqueue_script('footer', get_theme_file_uri('/assets/js/footer.js'), array(), starter_get_version('/assets/js/footer.js'), true);
+    wp_enqueue_script('main', get_theme_file_uri('/assets/js/main.js'), array('header', 'footer'), starter_get_version('/assets/js/main.js'), true);
 }
 
 /**

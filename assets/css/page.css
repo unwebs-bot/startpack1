@@ -5,8 +5,242 @@
    프로젝트에 맞게 필요한 스타일 추가
    ========================================================================== */
 
-/* Main Page */
-/* 프로젝트에 맞게 스타일 추가 */
+/* ==========================================================================
+   Main Page - 메인 비주얼 슬라이더
+   ========================================================================== */
+.uw-visual {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+
+/* Slide */
+.uw-visual__slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1.5s ease-in-out, visibility 1.5s;
+  z-index: 1;
+}
+
+.uw-visual__slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+/* Background Image & Zoom */
+.uw-visual__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.15);
+  transition: transform 6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.uw-visual__slide.is-active .uw-visual__bg {
+  transform: scale(1);
+}
+
+/* Overlay */
+.uw-visual__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+/* Text Content */
+.uw-visual__content {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  padding: 0 5vw;
+  color: #fff;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.uw-visual__title {
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease-out;
+}
+
+.uw-visual__desc {
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease-out;
+}
+
+/* Text Enter */
+.uw-visual__slide.is-active .uw-visual__title {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.3s;
+}
+
+.uw-visual__slide.is-active .uw-visual__desc {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.5s;
+}
+
+/* Text Exit */
+.uw-visual__slide:not(.is-active) .uw-visual__title,
+.uw-visual__slide:not(.is-active) .uw-visual__desc {
+  opacity: 0;
+  transform: translateY(-30px);
+  transition: all 0.5s ease-in;
+}
+
+/* Navigation (Pagination) */
+.uw-visual__nav {
+  position: absolute;
+  bottom: 60px;
+  left: 5vw;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  z-index: 10;
+}
+
+.uw-visual__nav-item {
+  position: relative;
+  width: 60px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  border-radius: 3px;
+  overflow: hidden;
+  transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1), background 0.3s;
+}
+
+.uw-visual__nav-item.is-active {
+  width: 140px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.uw-visual__nav-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #fff;
+  border-radius: 3px;
+}
+
+@keyframes uwVisualProgress {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+/* Scroll Down Indicator */
+.uw-visual__scroll {
+  position: absolute;
+  bottom: 60px;
+  right: 5vw;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 10;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.uw-visual__scroll:hover {
+  opacity: 1;
+}
+
+.uw-visual__scroll-text {
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.uw-visual__scroll-line {
+  width: 1px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.uw-visual__scroll-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: #fff;
+  animation: uwScrollDown 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+}
+
+@keyframes uwScrollDown {
+  0% { top: -100%; }
+  50% { top: 0; }
+  100% { top: 100%; }
+}
+
+/* Visual - Responsive */
+@media (max-width: 768px) {
+  .uw-visual__title {
+    font-size: 2.8rem;
+  }
+
+  .uw-visual__desc {
+    font-size: 1rem;
+  }
+
+  .uw-visual__nav {
+    bottom: 40px;
+    gap: 10px;
+  }
+
+  .uw-visual__nav-item {
+    width: 40px;
+    height: 4px;
+  }
+
+  .uw-visual__nav-item.is-active {
+    width: 80px;
+  }
+
+  .uw-visual__scroll {
+    display: none;
+  }
+}
+
 
 /* Sub Pages */
 /* 프로젝트에 맞게 스타일 추가 */

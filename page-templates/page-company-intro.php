@@ -11,16 +11,16 @@ get_header();
 <main class="uw-main" id="main-content" role="main">
 
   <!-- 섹션 1: 회사 개요 -->
-  <section class="section" style="padding: 100px 0;">
+  <section class="section">
     <div class="area">
       <div class="tit-box">
         <h4 class="main-tit">회사 개요</h4>
         <p class="sub-tit">혁신적인 기술로 더 나은 미래를 만들어갑니다</p>
       </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 60px;">
-        <div style="height: 400px; background: #e0e0e0;"></div>
+      <div class="grid grid--2 grid--gap-lg grid--align-center mt-60">
+        <div class="img-placeholder img-placeholder--lg"></div>
         <div>
-          <p style="font-size: 18px; line-height: 1.9; color: #555;">
+          <p class="text-desc">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             <br><br>
             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -31,26 +31,25 @@ get_header();
   </section>
 
   <!-- 섹션 2: 연혁 (배경색) -->
-  <section class="section" style="padding: 100px 0; background: #f8f8f8;">
+  <section class="section section--gray">
     <div class="area">
       <div class="tit-box">
         <h4 class="main-tit">회사 연혁</h4>
         <p class="sub-tit">끊임없는 성장의 발자취</p>
       </div>
-      <div style="max-width: 800px; margin: 60px auto 0;">
-        <!-- 연혁 아이템 예시 -->
-        <div style="display: flex; gap: 30px; padding: 30px 0; border-bottom: 1px solid #ddd;">
-          <span style="font-size: 24px; font-weight: 700; color: var(--uw-primary); min-width: 80px;">2024</span>
-          <div>
-            <p style="color: #333;">신규 연구소 설립</p>
-            <p style="color: #333; margin-top: 8px;">ISO 9001 인증 획득</p>
+      <div class="history-list">
+        <div class="history-item">
+          <span class="history-year">2024</span>
+          <div class="history-content">
+            <p>신규 연구소 설립</p>
+            <p>ISO 9001 인증 획득</p>
           </div>
         </div>
-        <div style="display: flex; gap: 30px; padding: 30px 0; border-bottom: 1px solid #ddd;">
-          <span style="font-size: 24px; font-weight: 700; color: var(--uw-primary); min-width: 80px;">2020</span>
-          <div>
-            <p style="color: #333;">법인 설립</p>
-            <p style="color: #333; margin-top: 8px;">첫 번째 제품 출시</p>
+        <div class="history-item">
+          <span class="history-year">2020</span>
+          <div class="history-content">
+            <p>법인 설립</p>
+            <p>첫 번째 제품 출시</p>
           </div>
         </div>
       </div>
@@ -58,17 +57,17 @@ get_header();
   </section>
 
   <!-- 섹션 3: 인증/수상 -->
-  <section class="section" style="padding: 100px 0;">
+  <section class="section">
     <div class="area">
       <div class="tit-box">
         <h4 class="main-tit">인증 및 수상</h4>
         <p class="sub-tit">신뢰할 수 있는 기술력을 인정받았습니다</p>
       </div>
-      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 60px;">
-        <div style="aspect-ratio: 1/1; background: #f0f0f0; display: flex; align-items: center; justify-content: center; border-radius: 8px;">인증서 1</div>
-        <div style="aspect-ratio: 1/1; background: #f0f0f0; display: flex; align-items: center; justify-content: center; border-radius: 8px;">인증서 2</div>
-        <div style="aspect-ratio: 1/1; background: #f0f0f0; display: flex; align-items: center; justify-content: center; border-radius: 8px;">인증서 3</div>
-        <div style="aspect-ratio: 1/1; background: #f0f0f0; display: flex; align-items: center; justify-content: center; border-radius: 8px;">인증서 4</div>
+      <div class="grid grid--4 mt-60">
+        <div class="cert-card">인증서 1</div>
+        <div class="cert-card">인증서 2</div>
+        <div class="cert-card">인증서 3</div>
+        <div class="cert-card">인증서 4</div>
       </div>
     </div>
   </section>

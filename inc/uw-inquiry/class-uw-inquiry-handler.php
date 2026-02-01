@@ -431,6 +431,19 @@ class UW_Inquiry_Handler
             wp_send_json_error('보안 검증에 실패했습니다.');
         }
 
+        // Rate Limiting (IP 기반: 5분에 3회 제한)
+        $client_ip = $this->get_client_ip();
+        $rate_limit_key = 'uw_inquiry_rate_' . md5($client_ip);
+        $rate_limit = get_transient($rate_limit_key);
+
+        if ($rate_limit === false) {
+            set_transient($rate_limit_key, 1, 5 * MINUTE_IN_SECONDS);
+        } elseif ($rate_limit >= 3) {
+            wp_send_json_error('너무 많은 요청입니다. 잠시 후 다시 시도해주세요.');
+        } else {
+            set_transient($rate_limit_key, $rate_limit + 1, 5 * MINUTE_IN_SECONDS);
+        }
+
         $form_id = isset($_POST['form_id']) ? absint($_POST['form_id']) : 0;
 
         if (!$form_id) {
@@ -495,7 +508,13 @@ class UW_Inquiry_Handler
                     if (!in_array($actual_type, $allowed_types)) {
                         wp_send_json_error('허용되지 않는 파일 형식입니다. (허용: 이미지, PDF, 문서, 엑셀, ZIP)');
                     }
-                    
+
+                    // 파일 크기 제한 (10MB)
+                    $max_file_size = 10 * 1024 * 1024; // 10MB
+                    if ($_FILES[$field_id]['size'] > $max_file_size) {
+                        wp_send_json_error('파일 크기가 너무 큽니다. (최대 10MB)');
+                    }
+
                     // 워드프레스 파일 업로드 함수 로드
                     if (!function_exists('wp_handle_upload')) {
                         require_once(ABSPATH . 'wp-admin/includes/file.php');
